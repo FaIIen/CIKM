@@ -51,6 +51,7 @@ public class GraphTxt {
 				}else{
 					occurQuery=query2+"\t"+query1;
 				}
+				
 				int count=readOccur(occurQuery.substring(occurQuery.length()-1,occurQuery.length()), occurQuery);
 				if(count==-1){
 					//System.out.println(occurQuery);

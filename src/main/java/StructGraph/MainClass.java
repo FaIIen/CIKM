@@ -6,6 +6,7 @@ public class MainClass {
 		GraphTxt gt=new GraphTxt("graph-data/graph.txt");
 		gt.getGraphTxt();
 
+		
 	}
 
 }
