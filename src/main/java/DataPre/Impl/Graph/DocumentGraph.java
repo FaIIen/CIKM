@@ -55,6 +55,8 @@ public class DocumentGraph extends GraphPre{
 		BufferedWriter[] refineFileBw=new BufferedWriter[10];
 		for(int i=0;i<10;i++){
 			String fileName=FileOp.basePath+"train-data/document/doc--"+i+"--.txt";
+			File dir=new File(FileOp.basePath+"train-data/document");
+			dir.mkdir();
 			refineFileBw[i]=new BufferedWriter(new FileWriter(new File(fileName)));
 		}
 		for(Map.Entry<String, Integer> entry:docMap.entrySet()){

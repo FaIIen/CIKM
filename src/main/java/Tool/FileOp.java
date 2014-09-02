@@ -11,9 +11,9 @@ import java.util.List;
 public class FileOp {
 	
 	public static String basePath=System.getProperty("user.dir")+"/src/main/resource/";
-	public static String refinePath=basePath+"train-data/refine";
-	public static String occurPath=basePath+"train-data/co-occur";
-	public static String docPath=basePath+"train-data/document";
+	public static String refinePath=basePath+"train-data/refine/";
+	public static String occurPath=basePath+"train-data/co-occur/";
+	public static String docPath=basePath+"train-data/document/";
 	/**
 	 * 从指定文件名读取信息
 	 * @param fileName 文件名  默认文件路径为classpath:src/main/resource下

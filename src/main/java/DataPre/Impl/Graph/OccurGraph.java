@@ -40,6 +40,8 @@ public class OccurGraph extends GraphPre{
 					continue;
 				}else if(preQuery.compareTo(curQuery)==1){
 					occurSet.add(preQuery+"\t"+curQuery);
+				}else{
+					occurSet.add(curQuery+"\t"+preQuery);
 				}
 			}
 		}
@@ -63,6 +65,8 @@ public class OccurGraph extends GraphPre{
 		BufferedWriter[] refineFileBw=new BufferedWriter[10];
 		for(int i=0;i<10;i++){
 			String fileName=FileOp.basePath+"train-data/co-occur/occur--"+i+"--.txt";
+			File dir=new File(FileOp.basePath+"train-data/co-occur");
+			dir.mkdir();
 			refineFileBw[i]=new BufferedWriter(new FileWriter(new File(fileName)));
 		}
 		for(Map.Entry<String, Integer> entry:occureMap.entrySet()){
