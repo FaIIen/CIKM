@@ -11,6 +11,7 @@ import DataPre.Impl.File.ClassFilter;
 import DataPre.Impl.File.CountQT;
 import DataPre.Impl.File.MultiClassFilter;
 import DataPre.Impl.File.WordFilter;
+import DataPre.Impl.Graph.CountQuery;
 import DataPre.Impl.Graph.DocumentGraph;
 import DataPre.Impl.Graph.OccurGraph;
 import DataPre.Impl.Graph.RefineGraph;
@@ -28,14 +29,14 @@ public class DataPreMainClass {
 //				tmpFile.delete();
 //			GraphPre datapre=new RefineGraph("train-data/train_codechange.txt");
 //			datapre.process();
-			for(int i=3;i<10;i++){
-				GraphPre datapre=new OccurGraph("train-data/train_codechange.txt",i);
-				datapre.process();
-			}
-			
+//			for(int i=3;i<10;i++){
+//				GraphPre datapre=new OccurGraph("train-data/train_codechange.txt",i);
+//				datapre.process();
+//			}
 //			datapre=new DocumentGraph("train-data/train_codechange.txt");
 //			datapre.process();
-
+			GraphPre g=new CountQuery("train-data/train_codechange.txt");
+			g.process();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

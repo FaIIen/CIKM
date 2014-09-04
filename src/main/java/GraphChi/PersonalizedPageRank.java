@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
 
+import org.apache.pig.parser.QueryParser.foreach_clause_complex_return;
+
 import Tool.FileOp;
 import edu.cmu.graphchi.ChiFilenames;
 import edu.cmu.graphchi.ChiLogger;
@@ -170,6 +172,7 @@ public class PersonalizedPageRank implements WalkUpdateFunction<Float, Float> {
 
     public static void main(String[] args) throws Exception {
         try {
+        	List<String> markQuery=FileOp.readList("train-data/countqt.txt");
             /**
              * Preprocess graph if needed
              */
@@ -195,7 +198,8 @@ public class PersonalizedPageRank implements WalkUpdateFunction<Float, Float> {
             int walksPerSource = 1000;
             int nIters = 10;
             String companionUrl = "local";
-            for(int firstSource=0;firstSource<272071;firstSource++){
+            for(String query:markQuery){
+            	int firstSource=Integer.valueOf(query);
             	PersonalizedPageRank pp = new PersonalizedPageRank(companionUrl, baseFilename, nShards,
                         firstSource, numSources, walksPerSource);
                 pp.execute(nIters);

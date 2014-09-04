@@ -1,11 +1,6 @@
 /train-data
 /graph-data
 /graphchi-java-0.2.jar
-/DataPre
-/StructGraph
-/Tool
-<<<<<<< HEAD
-=======
 /1.txt
 /1.txt.1.intervalsjava
 /1.txt.1.vtranslate
@@ -19,8 +14,9 @@
 /1.txt_degsj.bin
 /1.txt_ppr_0_0.top100
 /1.txt_ppr_1_1.top100
-/graph-data
-/train-data
-/graphchi-java-0.2.jar
+/DataPre
 /GraphChi
->>>>>>> refs/remotes/origin/master
+/StructGraph
+/Tool
+/countqt.txt
+/META-INF
