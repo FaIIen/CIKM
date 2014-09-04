@@ -1,3 +1,4 @@
+package GraphChi;
 import edu.cmu.graphchi.preprocessing.EdgeProcessor;
 
 public class MyEdgeProcessor implements EdgeProcessor<Float>{
