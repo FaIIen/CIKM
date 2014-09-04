@@ -4,3 +4,23 @@
 /DataPre
 /StructGraph
 /Tool
+<<<<<<< HEAD
+=======
+/1.txt
+/1.txt.1.intervalsjava
+/1.txt.1.vtranslate
+/1.txt.4Bj.vout
+/1.txt.edata_java.0_1.adj
+/1.txt.edata_java.0_1.adj.index
+/1.txt.edata_java.e4B.0_1.Z._blockdir_4194304
+/1.txt.edata_java.e4B.0_1.size
+/1.txt.shovel.0
+/1.txt.vertexshovel.0
+/1.txt_degsj.bin
+/1.txt_ppr_0_0.top100
+/1.txt_ppr_1_1.top100
+/graph-data
+/train-data
+/graphchi-java-0.2.jar
+/GraphChi
+>>>>>>> refs/remotes/origin/master

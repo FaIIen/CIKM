@@ -1,3 +1,4 @@
+package GraphChi;
 import edu.cmu.graphchi.preprocessing.VertexProcessor;
 
 public class MyVertexProcessor implements VertexProcessor<Float>{

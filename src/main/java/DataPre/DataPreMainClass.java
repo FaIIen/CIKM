@@ -20,18 +20,22 @@ public class DataPreMainClass {
 	public static void main(String[] args) {
 		try {
 //			CodeConvert convert=new CodeConvert("train-data/train");
-//			convert.startChange(1, "train-data/train_tmpcodechange.txt","Q","QueryMap.txt");
+//			convert.startChange(1, "train-data/train_tmpcodechange.txt","","QueryMap.txt");
 //			File tmpFile=new File(FileOp.basePath+"train-data/train_tmpcodechange.txt");
 //			convert=new CodeConvert("train-data/train_tmpcodechange.txt");
-//			convert.startChange(2, "train-data/train_codechange.txt", "T","TitleMap.txt");
+//			convert.startChange(2, "train-data/train_codechange.txt", "5000000","TitleMap.txt");
 //			if(tmpFile.exists())
 //				tmpFile.delete();
-//			GraphPre refine=new RefineGraph("train-data/train_codechange.txt");
-//			refine.process();
-			GraphPre occur=new OccurGraph("train-data/train_codechange.txt");
-			occur.process();
-//			GraphPre doc=new DocumentGraph("train-data/train_codechange.txt");
-//			doc.process();
+//			GraphPre datapre=new RefineGraph("train-data/train_codechange.txt");
+//			datapre.process();
+			for(int i=3;i<10;i++){
+				GraphPre datapre=new OccurGraph("train-data/train_codechange.txt",i);
+				datapre.process();
+			}
+			
+//			datapre=new DocumentGraph("train-data/train_codechange.txt");
+//			datapre.process();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -1,5 +1,8 @@
+package GraphChi;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.rmi.Naming;
 import java.sql.Array;
@@ -8,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
+
 import Tool.FileOp;
 import edu.cmu.graphchi.ChiFilenames;
 import edu.cmu.graphchi.ChiLogger;
@@ -74,11 +78,7 @@ public class PersonalizedPageRank implements WalkUpdateFunction<Float, Float> {
         /* For debug */
         VertexIdTranslate vertexIdTranslate = this.drunkardMobEngine.getVertexIdTranslate();
         IdCount[] topForFirst = companion.getTop(firstSource, 10);
-
-        System.out.println("Top visits from source vertex " + vertexIdTranslate.forward(firstSource) + " (internal id=" + firstSource + ")");
-        for(IdCount idc : topForFirst) {
-            System.out.println(vertexIdTranslate.backward(idc.id) + ": " + idc.count);
-        }
+        outputResult("stResult.txt", topForFirst);
 
         /* If local, shutdown the companion */
         if (companion instanceof DrunkardCompanion) {
@@ -86,6 +86,23 @@ public class PersonalizedPageRank implements WalkUpdateFunction<Float, Float> {
         }
     }
 
+    private void outputResult(String outFile,IdCount[] topForFirst) throws IOException{
+    	if(topForFirst.length==0)
+    		return;
+    	VertexIdTranslate vertexIdTranslate = this.drunkardMobEngine.getVertexIdTranslate();
+    	BufferedWriter bw=new BufferedWriter(new FileWriter(new File(FileOp.graphPath+outFile),true));
+    	bw.write("Top visits from source vertex " + vertexIdTranslate.forward(firstSource) + " (internal id=" + firstSource + ")");
+    	bw.newLine();
+    	float total=0.0f;
+    	for(IdCount idc : topForFirst) {
+    		total+=idc.count;
+    	}
+    	for(IdCount idc : topForFirst) {
+            bw.write(vertexIdTranslate.backward(idc.id) + ": " + idc.count/total);
+            bw.newLine();
+        }
+    	bw.close();
+    }
     /**
      * WalkUpdateFunction interface implementations
      */
@@ -116,7 +133,15 @@ public class PersonalizedPageRank implements WalkUpdateFunction<Float, Float> {
         }
     }
 
-    private static int percentRandom(Float[] percent){
+    private static int percentRandom(Float[] edgeCount){
+    	Float[] percent = new Float[edgeCount.length];
+    	Float total=0.0f;
+    	for(int i=0;i<edgeCount.length;i++){
+    		total+=edgeCount[i];
+    	}
+    	for(int i=0;i<edgeCount.length;i++){
+    		percent[i]=edgeCount[i]/total;
+    	}
     	double randomNumber=Math.random();
     	if(percent==null || percent.length==0)
     		throw new RuntimeException("Illegal percentage!");
@@ -148,7 +173,7 @@ public class PersonalizedPageRank implements WalkUpdateFunction<Float, Float> {
             /**
              * Preprocess graph if needed
              */
-            String baseFilename = FileOp.basePath+"1.txt";
+            String baseFilename = FileOp.graphPath+"graph.txt";
             int nShards = 1;
             String fileType = "edgelist";
 
@@ -166,15 +191,16 @@ public class PersonalizedPageRank implements WalkUpdateFunction<Float, Float> {
             }
  
             // Run
-            int firstSource = 1;
             int numSources = 1;
             int walksPerSource = 1000;
             int nIters = 10;
             String companionUrl = "local";
-
-            PersonalizedPageRank pp = new PersonalizedPageRank(companionUrl, baseFilename, nShards,
-                    firstSource, numSources, walksPerSource);
-            pp.execute(nIters);
+            for(int firstSource=0;firstSource<272071;firstSource++){
+            	PersonalizedPageRank pp = new PersonalizedPageRank(companionUrl, baseFilename, nShards,
+                        firstSource, numSources, walksPerSource);
+                pp.execute(nIters);
+            }
+            
 
         } catch (Exception err) {
             err.printStackTrace();

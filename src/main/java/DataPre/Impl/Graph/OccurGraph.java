@@ -15,10 +15,11 @@ import DataPre.GraphPre;
 
 public class OccurGraph extends GraphPre{
 	private Map<String, Integer> occureMap;
-
-	public OccurGraph(String inFile) {
+	int curindex;
+	public OccurGraph(String inFile,int index) {
 		super(inFile);
 		occureMap=new HashMap<>();
+		this.curindex=index;
 	}
 
 	@Override
@@ -42,13 +43,13 @@ public class OccurGraph extends GraphPre{
 				}else if(preQuery.compareTo(curQuery)==1){
 					String q=preQuery+"\t"+curQuery;
 					int index=Integer.valueOf(q.substring(q.length()-1,q.length()));
-					if(index!=9)
+					if(index!=curindex)
 						continue;
 					occurSet.add(preQuery+"\t"+curQuery);
 				}else{
 					String q=curQuery+"\t"+preQuery;
 					int index=Integer.valueOf(q.substring(q.length()-1,q.length()));
-					if(index!=9l)
+					if(index!=curindex)
 						continue;
 					occurSet.add(curQuery+"\t"+preQuery);
 				}
