@@ -26,15 +26,12 @@ public class DataPreMainClass {
 //			convert.startChange(2, "train-data/train_codechange.txt", "T","TitleMap.txt");
 //			if(tmpFile.exists())
 //				tmpFile.delete();
-			GraphPre refine=new RefineGraph("train-data/train_codechange.txt");
-			refine.process();
-			refine=null;
-//			GraphPre occur=new OccurGraph("train-data/train_codechange.txt");
-//			occur.process();
-//			occur=null;
+//			GraphPre refine=new RefineGraph("train-data/train_codechange.txt");
+//			refine.process();
+			GraphPre occur=new OccurGraph("train-data/train_codechange.txt");
+			occur.process();
 //			GraphPre doc=new DocumentGraph("train-data/train_codechange.txt");
 //			doc.process();
-//			doc=null;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

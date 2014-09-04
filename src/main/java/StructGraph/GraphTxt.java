@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.pig.parser.QueryParser.foreach_clause_complex_return;
 
 import Tool.FileOp;
 

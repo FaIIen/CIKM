@@ -15,6 +15,7 @@ import DataPre.GraphPre;
 
 public class OccurGraph extends GraphPre{
 	private Map<String, Integer> occureMap;
+
 	public OccurGraph(String inFile) {
 		super(inFile);
 		occureMap=new HashMap<>();
@@ -39,8 +40,16 @@ public class OccurGraph extends GraphPre{
 				if(preQuery.compareTo(curQuery)==0){
 					continue;
 				}else if(preQuery.compareTo(curQuery)==1){
+					String q=preQuery+"\t"+curQuery;
+					int index=Integer.valueOf(q.substring(q.length()-1,q.length()));
+					if(index!=9)
+						continue;
 					occurSet.add(preQuery+"\t"+curQuery);
 				}else{
+					String q=curQuery+"\t"+preQuery;
+					int index=Integer.valueOf(q.substring(q.length()-1,q.length()));
+					if(index!=9l)
+						continue;
 					occurSet.add(curQuery+"\t"+preQuery);
 				}
 			}
@@ -66,8 +75,9 @@ public class OccurGraph extends GraphPre{
 		for(int i=0;i<10;i++){
 			String fileName=FileOp.basePath+"train-data/co-occur/occur--"+i+"--.txt";
 			File dir=new File(FileOp.basePath+"train-data/co-occur");
-			dir.mkdir();
-			refineFileBw[i]=new BufferedWriter(new FileWriter(new File(fileName)));
+			if(!dir.exists())
+				dir.mkdir();
+			refineFileBw[i]=new BufferedWriter(new FileWriter(new File(fileName),true));
 		}
 		for(Map.Entry<String, Integer> entry:occureMap.entrySet()){
 			String queryName=entry.getKey();
