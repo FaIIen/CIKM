@@ -20,7 +20,7 @@ public class CodeConvert {
 		convertMap=new HashMap<>();
 	}
 	
-	public void convert(String codeName,int position) throws IOException{
+	public void convert(int codeName,int position) throws IOException{
 		int Count=0;
 		BufferedReader br=new BufferedReader(new FileReader(new File(inFile)));
 		String oneLine=null;
@@ -31,14 +31,14 @@ public class CodeConvert {
 			if(position==1 || (position==2 && items.length==3 && !items[2].equals("") && !items[2].equals("-")) ){
 				String query=oneLine.split("\t")[position];
 				if(!convertMap.containsKey(query)){
-					convertMap.put(query, codeName+Count);
+					convertMap.put(query, Integer.toString(codeName+Integer.valueOf(Count)));
 					Count++;
 				}
 			}
 		}
 	}
 	
-	public void startChange(int position,String outFileName,String codeName,String mapName) throws IOException{
+	public void startChange(int position,String outFileName,int codeName,String mapName) throws IOException{
 		convert(codeName,position);
 		BufferedReader br=new BufferedReader(new FileReader(new File(inFile)));
 		BufferedWriter bw=new BufferedWriter(new FileWriter(new File(FileOp.basePath+outFileName)));

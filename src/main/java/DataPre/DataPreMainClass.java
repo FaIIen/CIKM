@@ -20,21 +20,21 @@ public class DataPreMainClass {
 
 	public static void main(String[] args) {
 		try {
-//			CodeConvert convert=new CodeConvert("train-data/train");
-//			convert.startChange(1, "train-data/train_tmpcodechange.txt","","QueryMap.txt");
-//			File tmpFile=new File(FileOp.basePath+"train-data/train_tmpcodechange.txt");
-//			convert=new CodeConvert("train-data/train_tmpcodechange.txt");
-//			convert.startChange(2, "train-data/train_codechange.txt", "5000000","TitleMap.txt");
-//			if(tmpFile.exists())
-//				tmpFile.delete();
-//			GraphPre datapre=new RefineGraph("train-data/train_codechange.txt");
-//			datapre.process();
-//			for(int i=3;i<10;i++){
-//				GraphPre datapre=new OccurGraph("train-data/train_codechange.txt",i);
-//				datapre.process();
-//			}
-//			datapre=new DocumentGraph("train-data/train_codechange.txt");
-//			datapre.process();
+			CodeConvert convert=new CodeConvert("train-data/train");
+			convert.startChange(1, "train-data/train_tmpcodechange.txt",0,"QueryMap.txt");
+			File tmpFile=new File(FileOp.basePath+"train-data/train_tmpcodechange.txt");
+			convert=new CodeConvert("train-data/train_tmpcodechange.txt");
+			convert.startChange(2, "train-data/train_codechange.txt", 5000000,"TitleMap.txt");
+			if(tmpFile.exists())
+				tmpFile.delete();
+			GraphPre datapre=new RefineGraph("train-data/train_codechange.txt");
+			datapre.process();
+			for(int i=0;i<10;i++){
+				datapre=new OccurGraph("train-data/train_codechange.txt",i);
+				datapre.process();
+			}
+			datapre=new DocumentGraph("train-data/train_codechange.txt");
+			datapre.process();
 			GraphPre g=new CountQuery("train-data/train_codechange.txt");
 			g.process();
 		} catch (IOException e) {

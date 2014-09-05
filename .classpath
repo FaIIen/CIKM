@@ -23,6 +23,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Fallen/Desktop/Desktop/graphchi-java-master/graphchi-java-master/target/graphchi-java-0.2.jar"/>
+	<classpathentry kind="lib" path="D:/School/JavaProject-kepler/CIKM/src/main/resource/graphchi-java-0.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
