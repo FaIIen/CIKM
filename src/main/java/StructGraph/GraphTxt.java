@@ -13,15 +13,23 @@ import java.util.Map;
 import Tool.FileOp;
 
 public class GraphTxt {
-	private Map<String, Integer> graphMap;
+	private Map<String, Float> graphMap;
 	private String outFile;
-	public GraphTxt(String outFile){
+	private float outPercent;
+	public GraphTxt(String outFile,float oP){
 		this.outFile=FileOp.basePath+outFile;
 		graphMap=new HashMap<>();
+		outPercent=oP;
 	}
 	
 	
 	private void readRefine() throws IOException{
+		File gFile=new File(FileOp.graphPath);
+		if(!gFile.exists())
+			gFile.mkdir();
+		File subFile=new File(FileOp.subPath);
+		if(!subFile.exists())
+			subFile.mkdir();
 		for(int k=0;k<10;k++){
 			File delFile=new File(FileOp.subPath+"sub--"+k+"--.txt");
 			if(delFile.exists())
@@ -108,7 +116,7 @@ public class GraphTxt {
 			while((oneLine=br.readLine())!=null){
 				String[] items=oneLine.split("\t");
 				String query=items[0]+"\t"+items[1];
-				int count=Integer.valueOf(items[2]);
+				float count=Integer.valueOf(items[2])*outPercent;
 				if(graphMap.containsKey(query)){
 					graphMap.put(query, graphMap.get(query)+count);
 				}else{
@@ -116,7 +124,7 @@ public class GraphTxt {
 				}
 			}
 			br.close();
-			for(Map.Entry<String, Integer> entry:graphMap.entrySet()){
+			for(Map.Entry<String, Float> entry:graphMap.entrySet()){
 				bw.write(entry.getKey()+"\t"+entry.getValue()+"\n");
 			}
 			bw.close();

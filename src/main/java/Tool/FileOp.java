@@ -16,6 +16,7 @@ public class FileOp {
 	public static String docPath=basePath+"train-data/document/";
 	public static String subPath=basePath+"graph-data/sub/";
 	public static String graphPath=basePath+"graph-data/";
+	public static String classifierPath=basePath+"classifier/";
 	/**
 	 * 从指定文件名读取信息
 	 * @param fileName 文件名  默认文件路径为classpath:src/main/resource下

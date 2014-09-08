@@ -19,7 +19,7 @@ import DataPre.Impl.Graph.RefineGraph;
 public class DataPreMainClass {
 
 	public static void main(String[] args) {
-		try {
+		try {			
 			CodeConvert convert=new CodeConvert("train-data/train");
 			convert.startChange(1, "train-data/train_tmpcodechange.txt",0,"QueryMap.txt");
 			File tmpFile=new File(FileOp.basePath+"train-data/train_tmpcodechange.txt");

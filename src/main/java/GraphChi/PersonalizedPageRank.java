@@ -50,7 +50,7 @@ public class PersonalizedPageRank implements WalkUpdateFunction<Float, Float> {
         this.numWalksPerSource = walksPerSource;
     }
 
-    private void execute(int numIters) throws Exception {
+    private void execute(int numIters,BufferedWriter bw) throws Exception {
         File graphFile = new File(baseFilename);
 
         /** Use local drunkard mob companion. You can also pass a remote reference
@@ -78,9 +78,8 @@ public class PersonalizedPageRank implements WalkUpdateFunction<Float, Float> {
                 + (firstSource + numSources - 1) + ".top" + nTop, nTop);
 
         /* For debug */
-        VertexIdTranslate vertexIdTranslate = this.drunkardMobEngine.getVertexIdTranslate();
         IdCount[] topForFirst = companion.getTop(firstSource, 10);
-        outputResult("stResult.txt", topForFirst);
+        outputResult(bw, topForFirst);
 
         /* If local, shutdown the companion */
         if (companion instanceof DrunkardCompanion) {
@@ -88,22 +87,19 @@ public class PersonalizedPageRank implements WalkUpdateFunction<Float, Float> {
         }
     }
 
-    private void outputResult(String outFile,IdCount[] topForFirst) throws IOException{
+    private void outputResult(BufferedWriter bw,IdCount[] topForFirst) throws IOException{
     	if(topForFirst.length==0)
     		return;
     	VertexIdTranslate vertexIdTranslate = this.drunkardMobEngine.getVertexIdTranslate();
-    	BufferedWriter bw=new BufferedWriter(new FileWriter(new File(FileOp.graphPath+outFile),true));
-    	bw.write("Top visits from source vertex " + vertexIdTranslate.forward(firstSource) + " (internal id=" + firstSource + ")");
-    	bw.newLine();
     	float total=0.0f;
     	for(IdCount idc : topForFirst) {
     		total+=idc.count;
     	}
     	for(IdCount idc : topForFirst) {
-            bw.write(vertexIdTranslate.backward(idc.id) + ": " + idc.count/total);
+            bw.write(vertexIdTranslate.backward(idc.id) + ": " + idc.count/total+"*"+vertexIdTranslate.forward(firstSource));
             bw.newLine();
         }
-    	bw.close();
+    	bw.newLine();
     }
     /**
      * WalkUpdateFunction interface implementations
@@ -173,6 +169,10 @@ public class PersonalizedPageRank implements WalkUpdateFunction<Float, Float> {
     public static void main(String[] args) throws Exception {
         try {
         	List<String> markQuery=FileOp.readList("train-data/countqt.txt");
+        	File dFile =new File(FileOp.graphPath+"stResult.txt");
+        	if(dFile.exists())
+        		dFile.delete();
+        	BufferedWriter bw=new BufferedWriter(new FileWriter(new File(FileOp.graphPath+"stResult.txt"),true));
             /**
              * Preprocess graph if needed
              */
@@ -195,16 +195,18 @@ public class PersonalizedPageRank implements WalkUpdateFunction<Float, Float> {
  
             // Run
             int numSources = 1;
-            int walksPerSource = 1000;
-            int nIters = 10;
+            int walksPerSource = 2000;
+            int nIters = 5;
             String companionUrl = "local";
             for(String query:markQuery){
             	int firstSource=Integer.valueOf(query);
             	PersonalizedPageRank pp = new PersonalizedPageRank(companionUrl, baseFilename, nShards,
                         firstSource, numSources, walksPerSource);
-                pp.execute(nIters);
+            	logger.info("INFO:"+firstSource+"start!");
+                pp.execute(nIters,bw);
+                bw.flush();
             }
-            
+            bw.close();
 
         } catch (Exception err) {
             err.printStackTrace();
